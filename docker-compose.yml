@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: app
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=http://0.0.0.0:8000/graphql
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
