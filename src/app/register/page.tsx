@@ -1,6 +1,19 @@
-import React from "react";
+"user client"
+import React, {FormEvent} from "react";
+import Link from "next/link";
 
-const Register = () => {
+const Register: React.FC = () => {
+
+
+    const handleSubmit = (e: FormEvent)=>{
+        e.preventDefault();
+        // const email = e.target[0].value;
+        // const password = e.target[1].value
+
+
+        // console.log(email,password );
+        console.log('Done!');
+    };
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="bg-[#212121] p-8 rounded shadow-md w-96">
@@ -22,9 +35,16 @@ const Register = () => {
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
           >
+            {""}
             Register
           </button>
         </form>
+        <div className="text-center text-gray-500 mt-4">- OR -</div>
+
+        <Link className="block text-center text-blue-500 hover:underline mt-2"
+        href="/login">
+            Login with an existing account 
+        </Link>
       </div>          
     </div>
   );
