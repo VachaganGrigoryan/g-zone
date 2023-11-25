@@ -1,0 +1,49 @@
+mutation Login($email: String!, $password: String!) {
+    account {
+        login(email: $email, password: $password) {
+            ... on JwtTokenType {
+                __typename
+                access
+                refresh
+            }
+            ... on JwtAuthError {
+                __typename
+                code
+                message
+            }
+        }
+    }
+}
+
+#mutation Register($email: String!, $firstName: String, $lastName: String, $password: String!) {
+#    account {
+#        register(
+#            data: {email: $email, firstName: $firstName, lastName: $lastName, password: $password}
+#        ) {
+#            guid
+#            email
+#            firstName
+#            lastName
+#        }
+#    }
+#}
+
+mutation Logout {
+    account {
+        logout
+    }
+}
+
+query Me {
+    account {
+        me {
+            lastName
+            guid
+            email
+            firstName
+            profile {
+                avatar
+            }
+        }
+    }
+}
