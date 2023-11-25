@@ -1,0 +1,17 @@
+query Games {
+    zone {
+        games {
+            ...GameTypeFragment
+        }
+    }
+}
+
+fragment GameTypeFragment on GameType {
+    guid
+    title
+    description
+    image
+    configs
+    createdAt
+    updatedAt
+}
