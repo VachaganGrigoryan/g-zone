@@ -5,26 +5,28 @@ type FormInputProps = {
   label: string;
   name: string;
   type?: string;
+  placeholder?: string;
 };
 
 export const FormInput: React.FC<FormInputProps> = ({
   label,
   name,
   type = "text",
+  placeholder,
 }) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
   return (
-    <div className="">
-      <label htmlFor={name} className="block text-ct-blue-600 mb-3">
+    <div className="flex justify-center pt-4">
+      {/* <label htmlFor={name} className="block text-ct-blue-600 mb-3">
         {label}
-      </label>
+      </label> */}
       <input
         type={type}
-        placeholder=" "
-        className="block w-full rounded-2xl appearance-none focus:outline-none py-2 px-4"
+        placeholder={placeholder}
+        className="block rounded-xl bg-gray-200 appearance-none focus:outline-none py-2 px-4 border-2 border-stone-600 placeholder:text-black"
         {...register(name)}
       />
       {errors[name] && (

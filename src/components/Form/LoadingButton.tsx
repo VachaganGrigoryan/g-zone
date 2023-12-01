@@ -19,7 +19,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
     <button
       type="submit"
       className={clsx(
-        `w-full py-3 font-semibold rounded-lg outline-none border-none flex justify-center`,
+        `rounded-3xl outline-none border-none bg-gray-300 w-[100px] h-[25px] self-center pt-2 pb-8`,
         `${btnColor} ${loading && "bg-[#ccc]"}`,
       )}
     >

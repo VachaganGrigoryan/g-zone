@@ -88,20 +88,20 @@ export default function LoginForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
-        className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 rounded-2xl p-8 space-y-5"
+        className="w-full max-w-md w-full mx-auto overflow-hidden bg-ct-dark-200 space-y-5 flex flex-col justify-center align-center mt-5"
       >
-        <FormInput label="Email" name="email" type="email" />
-        <FormInput label="Password" name="password" type="password" />
+        <FormInput placeholder="Email" label="Email" name="email" type="email" />
+        <FormInput placeholder="Password" label="Password" name="password" type="password" />
 
-        <div className="text-right">
+        {/* <div className="text-right">
           <Link href="#" className="">
             Forgot Password?
           </Link>
-        </div>
+        </div> */}
         <LoadingButton loading={store.loading} textColor="text-ct-blue-600">
-          Login
+          Sign in
         </LoadingButton>
-        <span className="block">
+        <span className="block pl-5">
           Need an account?{" "}
           <Link href="/register" className="text-ct-blue-600">
             Sign Up Here
