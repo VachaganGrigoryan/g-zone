@@ -103,7 +103,7 @@ export default function LoginForm() {
         </LoadingButton>
         <span className="block pl-5">
           Need an account?{" "}
-          <Link href="/register" className="text-ct-blue-600">
+          <Link href="/register" className="text-ct-blue-600 hover:text-green-600">
             Sign Up Here
           </Link>
         </span>

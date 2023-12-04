@@ -5,6 +5,7 @@ import { useStoreContext } from "@/store";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import LoginBg from "@/assets/login/images/background.svg"
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,7 +21,6 @@ export default function LoginPage() {
     }
   }, []);
   
-
   if (state.tokens) return router.push("/games");
 
   return (
