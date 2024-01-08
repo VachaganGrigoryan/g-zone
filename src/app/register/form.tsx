@@ -3,7 +3,7 @@
 import { FormInput } from "@/components/Form";
 import { LoginMutationVariables } from "@/gql/graphql";
 import { FormProvider, useForm } from "react-hook-form";
-import { icons } from "lucide-react";
+// import { icons } from "lucide-react";
 
 
 export default function SignUpForm() {
@@ -24,18 +24,18 @@ export default function SignUpForm() {
         // onSubmit={}
       >
         <div className="relative">
-          <icons.UserRound className="absolute left-1 top-[25px] pr-2"/>
+          {/* <icons.UserRound className="absolute left-1 top-[25px] pr-2"/> */}
           <FormInput placeholder="Full Name" label="Text" name="text" type="text"/>
         </div>
         <div className="relative">
-          <icons.AtSign className="absolute left-1 top-[25px] pr-2"/>
+          {/* <icons.AtSign className="absolute left-1 top-[25px] pr-2"/> */}
           <FormInput placeholder="Email" label="Email" name="email" type="email" />
         </div>
         <div className="relative">
-          <icons.KeyRound className="absolute left-1 top-[25px] pr-2"/>
+          {/* <icons.KeyRound className="absolute left-1 top-[25px] pr-2"/> */}
           <FormInput placeholder="Password" label="Password" name="password" type="password" />
         </div>
-        <button className="bg-green-600 w-[100px] h-10 rounded-2xl self-center">Submit</button>
+        <button className="bg-black w-[100px] h-10 rounded-2xl text-white self-center mt-5">Submit</button>
       </form>
     </FormProvider>
     </div>

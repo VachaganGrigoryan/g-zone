@@ -26,7 +26,7 @@ export const FormInput: React.FC<FormInputProps> = ({
       <input
         type={type}
         placeholder={placeholder}
-        className="block rounded-xl bg-gray-200 appearance-none focus:outline-none py-2 px-4 border-2 border-stone-600 placeholder:text-black"
+        className="block rounded-xl bg-gray-200 appearance-none focus:outline-none py-2 px-4 border-2 border-stone-600 placeholder:text-gray-400"
         {...register(name)}
       />
       {errors[name] && (

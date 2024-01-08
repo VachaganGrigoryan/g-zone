@@ -4,7 +4,7 @@ import LoginForm from "./form";
 import { useStoreContext } from "@/store";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import LoginBg from "@/assets/login/images/background.svg"
+import LoginBg from "@/assets/login/images/Vector 1.svg"
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -33,9 +33,6 @@ export default function LoginPage() {
           </h1>
           <LoginForm />
         </div>
-        <button className="bg-green-600 w-[100px] h-10 rounded-2xl text-xl ml-4">
-            G-Zone
-        </button>
       </section>
     </>
   );

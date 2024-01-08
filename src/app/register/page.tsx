@@ -1,14 +1,13 @@
 import React from 'react';
 import SignUpForm from './form';
-import SignUpBg from "@/assets/login/images/background.svg"
+import SignUpBg from "@/assets/login/images/Vector 1.svg"
 
 const SignUpPage = () => {
   return (
     <div 
-    className='w-full h-screen flex justify-center items-center bg-red-500 bg-cover bg-center'
-    // style={{backgroundImage: `url(${SignUpBg})`}}
+    className='w-full h-screen flex justify-center items-center bg-cover bg-center'
     >
-      <div className='bg-opacity-40 bg-white pl-32 pr-32 pt-10 pb-24 rounded-md'>
+      <div className='bg-gray-200 pl-32 pr-32 pt-10 pb-24 rounded-2xl'>
         <SignUpForm/>
       </div>
     </div>

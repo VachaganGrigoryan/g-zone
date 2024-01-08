@@ -93,17 +93,17 @@ export default function LoginForm() {
         <FormInput placeholder="Email" label="Email" name="email" type="email" />
         <FormInput placeholder="Password" label="Password" name="password" type="password" />
 
-        {/* <div className="text-right">
-          <Link href="#" className="">
+        <div className="text-left">
+          <Link href="#" className="hover:text-cyan-600">
             Forgot Password?
           </Link>
-        </div> */}
-        <LoadingButton loading={store.loading} textColor="text-ct-blue-600">
+        </div>
+        <LoadingButton btnColor="bg-black" loading={store.loading} textColor="text-white">
           Sign in
         </LoadingButton>
         <span className="block pl-5">
           Need an account?{" "}
-          <Link href="/register" className="text-ct-blue-600 hover:text-green-600">
+          <Link href="/register" className="text-ct-blue-600 hover:text-cyan-600">
             Sign Up Here
           </Link>
         </span>
