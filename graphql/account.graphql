@@ -37,10 +37,9 @@ mutation Logout {
 query Me {
     account {
         me {
-            lastName
             guid
             email
-            firstName
+            fullName
             profile {
                 avatar
             }

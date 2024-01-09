@@ -22,9 +22,7 @@ export default function Home() {
       <section className="py-14 bg-slate-900">
         <div className="max-w-screen-xl mx-auto px-4 text-gray-200 md:px-8">
           <div className="relative max-w-xl mx-auto sm:text-center">
-            <h3 className="text-gray-400 text-3xl font-semibold sm:text-4xl">
-              Welcome to Game Zone {user?.email}
-            </h3>
+            <h3 className="text-gray-400 text-3xl font-semibold sm:text-4xl"></h3>
             <div className="flex flex-wrap justify-center">
               {games?.map((game, idx) => (
                 <div

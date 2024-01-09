@@ -1,0 +1,80 @@
+query CheckersBoards {
+    checkers {
+        boards {
+            ...BoardListFragment
+        }
+    }
+}
+
+fragment BoardListFragment on Board {
+    guid
+    createdAt
+    players {
+        player {
+            fullName
+            profile {
+                avatar
+            }
+        }
+    }
+}
+
+query CheckersByGUID($guid: String!) {
+    checkers {
+        game(guid: $guid) {
+            ...BoardFragment
+        }
+    }
+}
+
+mutation UpdateBoardInGame($guid: ID!, $gridChanges: [[Int!]!]!) {
+    checkers {
+        updateBoardInGame(gridChanges: $gridChanges, guid: $guid)
+    }
+}
+
+mutation JoinToGame($guid: ID!) {
+    checkers {
+        join(guid: $guid) {
+            ...BoardFragment
+        }
+    }
+}
+
+mutation StartGame($color: CC = Black, $length: BoardLength = EIGHT) {
+    checkers {
+        start(color: $color, length: $length) {
+            ...BoardFragment
+        }
+    }
+}
+
+fragment UserTypeFragment on UserType {
+    guid
+    email
+    fullName
+    profile {
+        avatar
+    }
+}
+
+fragment BoardFragment on Board {
+    guid
+    length
+    players {
+        player {
+            ...UserTypeFragment
+        }
+        stoneType
+    }
+    grid
+    queue {
+        guid
+    }
+    winner {
+        guid
+    }
+    isEnded
+    createdAt
+    updatedAt
+}
