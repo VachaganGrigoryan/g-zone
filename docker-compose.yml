@@ -10,7 +10,7 @@ services:
       - NODE_ENV=development
       - HOST=0.0.0.0
       - PORT=3000
-      - NEXT_PUBLIC_API_URL=http://0.0.0.0:8000/graphql
+      - NEXT_PUBLIC_API_URL=https://gamezone-app.onrender.com/graphql
     volumes:
       - ./:/app
       - /app/node_modules

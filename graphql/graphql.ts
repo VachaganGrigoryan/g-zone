@@ -53,30 +53,58 @@ export type BazarblotQuery = {
   tables: Array<Table>;
 };
 
-export type CheckersBoardType = {
-  __typename?: 'CheckersBoardType';
+export type Board = {
+  __typename?: 'Board';
   createdAt: Scalars['String']['output'];
   grid: Array<Array<Scalars['Int']['output']>>;
   guid: Scalars['ID']['output'];
   isEnded: Scalars['Boolean']['output'];
   length: Scalars['Int']['output'];
-  players: Array<UserType>;
-  queue: UserType;
+  players: Array<BoardPlayers>;
+  queue?: Maybe<UserType>;
   updatedAt: Scalars['String']['output'];
-  winner: UserType;
+  winner?: Maybe<UserType>;
 };
+
+export enum BoardLength {
+  Eight = 'EIGHT',
+  Ten = 'TEN'
+}
+
+export type BoardPlayers = {
+  __typename?: 'BoardPlayers';
+  player: UserType;
+  stoneType: Scalars['Int']['output'];
+};
+
+export enum Cc {
+  Black = 'Black',
+  White = 'White'
+}
 
 export type CheckersMutation = {
   __typename?: 'CheckersMutation';
-  createBoard: Scalars['JSON']['output'];
+  join: Board;
+  move: Board;
+  start: Board;
   updateBoardInGame: Scalars['JSON']['output'];
 };
 
 
-export type CheckersMutationCreateBoardArgs = {
-  color: Scalars['String']['input'];
-  length: Scalars['Int']['input'];
-  owner: Scalars['String']['input'];
+export type CheckersMutationJoinArgs = {
+  guid: Scalars['ID']['input'];
+};
+
+
+export type CheckersMutationMoveArgs = {
+  guid: Scalars['ID']['input'];
+  moves: Array<Array<Scalars['Int']['input']>>;
+};
+
+
+export type CheckersMutationStartArgs = {
+  color?: Cc;
+  length?: BoardLength;
 };
 
 
@@ -87,12 +115,12 @@ export type CheckersMutationUpdateBoardInGameArgs = {
 
 export type CheckersQuery = {
   __typename?: 'CheckersQuery';
-  checkers: Array<CheckersBoardType>;
-  resolveBoardState: Scalars['JSON']['output'];
+  boards: Array<Board>;
+  game: Board;
 };
 
 
-export type CheckersQueryResolveBoardStateArgs = {
+export type CheckersQueryGameArgs = {
   guid: Scalars['String']['input'];
 };
 
@@ -213,9 +241,8 @@ export type Team = {
 export type UserType = {
   __typename?: 'UserType';
   email: Scalars['String']['output'];
-  firstName: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
   guid: Scalars['ID']['output'];
-  lastName: Scalars['String']['output'];
   profile: ProfileType;
 };
 
@@ -240,7 +267,48 @@ export type LogoutMutation = { __typename?: 'Mutation', account: { __typename?: 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', account: { __typename?: 'AccountQuery', me: { __typename?: 'UserType', lastName: string, guid: string, email: string, firstName: string, profile: { __typename?: 'ProfileType', avatar: string } } } };
+export type MeQuery = { __typename?: 'Query', account: { __typename?: 'AccountQuery', me: { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } } };
+
+export type CheckersBoardsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CheckersBoardsQuery = { __typename?: 'Query', checkers: { __typename?: 'CheckersQuery', boards: Array<{ __typename?: 'Board', guid: string, createdAt: string, players: Array<{ __typename?: 'BoardPlayers', player: { __typename?: 'UserType', fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }> }> } };
+
+export type BoardListFragmentFragment = { __typename?: 'Board', guid: string, createdAt: string, players: Array<{ __typename?: 'BoardPlayers', player: { __typename?: 'UserType', fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }> };
+
+export type CheckersByGuidQueryVariables = Exact<{
+  guid: Scalars['String']['input'];
+}>;
+
+
+export type CheckersByGuidQuery = { __typename?: 'Query', checkers: { __typename?: 'CheckersQuery', game: { __typename?: 'Board', guid: string, length: number, grid: Array<Array<number>>, isEnded: boolean, createdAt: string, updatedAt: string, players: Array<{ __typename?: 'BoardPlayers', stoneType: number, player: { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }>, queue?: { __typename?: 'UserType', guid: string } | null, winner?: { __typename?: 'UserType', guid: string } | null } } };
+
+export type UpdateBoardInGameMutationVariables = Exact<{
+  guid: Scalars['ID']['input'];
+  gridChanges: Array<Array<Scalars['Int']['input']> | Scalars['Int']['input']> | Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+}>;
+
+
+export type UpdateBoardInGameMutation = { __typename?: 'Mutation', checkers: { __typename?: 'CheckersMutation', updateBoardInGame: any } };
+
+export type JoinToGameMutationVariables = Exact<{
+  guid: Scalars['ID']['input'];
+}>;
+
+
+export type JoinToGameMutation = { __typename?: 'Mutation', checkers: { __typename?: 'CheckersMutation', join: { __typename?: 'Board', guid: string, length: number, grid: Array<Array<number>>, isEnded: boolean, createdAt: string, updatedAt: string, players: Array<{ __typename?: 'BoardPlayers', stoneType: number, player: { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }>, queue?: { __typename?: 'UserType', guid: string } | null, winner?: { __typename?: 'UserType', guid: string } | null } } };
+
+export type StartGameMutationVariables = Exact<{
+  color?: InputMaybe<Cc>;
+  length?: InputMaybe<BoardLength>;
+}>;
+
+
+export type StartGameMutation = { __typename?: 'Mutation', checkers: { __typename?: 'CheckersMutation', start: { __typename?: 'Board', guid: string, length: number, grid: Array<Array<number>>, isEnded: boolean, createdAt: string, updatedAt: string, players: Array<{ __typename?: 'BoardPlayers', stoneType: number, player: { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }>, queue?: { __typename?: 'UserType', guid: string } | null, winner?: { __typename?: 'UserType', guid: string } | null } } };
+
+export type UserTypeFragmentFragment = { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } };
+
+export type BoardFragmentFragment = { __typename?: 'Board', guid: string, length: number, grid: Array<Array<number>>, isEnded: boolean, createdAt: string, updatedAt: string, players: Array<{ __typename?: 'BoardPlayers', stoneType: number, player: { __typename?: 'UserType', guid: string, email: string, fullName: string, profile: { __typename?: 'ProfileType', avatar: string } } }>, queue?: { __typename?: 'UserType', guid: string } | null, winner?: { __typename?: 'UserType', guid: string } | null };
 
 export type GamesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -249,6 +317,52 @@ export type GamesQuery = { __typename?: 'Query', zone: { __typename?: 'ZoneQuery
 
 export type GameTypeFragmentFragment = { __typename?: 'GameType', guid: string, title: string, description: string, image?: string | null, configs?: any | null, createdAt: any, updatedAt: any };
 
+export const BoardListFragmentFragmentDoc = gql`
+    fragment BoardListFragment on Board {
+  guid
+  createdAt
+  players {
+    player {
+      fullName
+      profile {
+        avatar
+      }
+    }
+  }
+}
+    `;
+export const UserTypeFragmentFragmentDoc = gql`
+    fragment UserTypeFragment on UserType {
+  guid
+  email
+  fullName
+  profile {
+    avatar
+  }
+}
+    `;
+export const BoardFragmentFragmentDoc = gql`
+    fragment BoardFragment on Board {
+  guid
+  length
+  players {
+    player {
+      ...UserTypeFragment
+    }
+    stoneType
+  }
+  grid
+  queue {
+    guid
+  }
+  winner {
+    guid
+  }
+  isEnded
+  createdAt
+  updatedAt
+}
+    ${UserTypeFragmentFragmentDoc}`;
 export const GameTypeFragmentFragmentDoc = gql`
     fragment GameTypeFragment on GameType {
   guid
@@ -297,10 +411,9 @@ export const MeDocument = gql`
     query Me {
   account {
     me {
-      lastName
       guid
       email
-      firstName
+      fullName
       profile {
         avatar
       }
@@ -311,6 +424,69 @@ export const MeDocument = gql`
 
 export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
   return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
+export const CheckersBoardsDocument = gql`
+    query CheckersBoards {
+  checkers {
+    boards {
+      ...BoardListFragment
+    }
+  }
+}
+    ${BoardListFragmentFragmentDoc}`;
+
+export function useCheckersBoardsQuery(options?: Omit<Urql.UseQueryArgs<CheckersBoardsQueryVariables>, 'query'>) {
+  return Urql.useQuery<CheckersBoardsQuery, CheckersBoardsQueryVariables>({ query: CheckersBoardsDocument, ...options });
+};
+export const CheckersByGuidDocument = gql`
+    query CheckersByGUID($guid: String!) {
+  checkers {
+    game(guid: $guid) {
+      ...BoardFragment
+    }
+  }
+}
+    ${BoardFragmentFragmentDoc}`;
+
+export function useCheckersByGuidQuery(options: Omit<Urql.UseQueryArgs<CheckersByGuidQueryVariables>, 'query'>) {
+  return Urql.useQuery<CheckersByGuidQuery, CheckersByGuidQueryVariables>({ query: CheckersByGuidDocument, ...options });
+};
+export const UpdateBoardInGameDocument = gql`
+    mutation UpdateBoardInGame($guid: ID!, $gridChanges: [[Int!]!]!) {
+  checkers {
+    updateBoardInGame(gridChanges: $gridChanges, guid: $guid)
+  }
+}
+    `;
+
+export function useUpdateBoardInGameMutation() {
+  return Urql.useMutation<UpdateBoardInGameMutation, UpdateBoardInGameMutationVariables>(UpdateBoardInGameDocument);
+};
+export const JoinToGameDocument = gql`
+    mutation JoinToGame($guid: ID!) {
+  checkers {
+    join(guid: $guid) {
+      ...BoardFragment
+    }
+  }
+}
+    ${BoardFragmentFragmentDoc}`;
+
+export function useJoinToGameMutation() {
+  return Urql.useMutation<JoinToGameMutation, JoinToGameMutationVariables>(JoinToGameDocument);
+};
+export const StartGameDocument = gql`
+    mutation StartGame($color: CC = Black, $length: BoardLength = EIGHT) {
+  checkers {
+    start(color: $color, length: $length) {
+      ...BoardFragment
+    }
+  }
+}
+    ${BoardFragmentFragmentDoc}`;
+
+export function useStartGameMutation() {
+  return Urql.useMutation<StartGameMutation, StartGameMutationVariables>(StartGameDocument);
 };
 export const GamesDocument = gql`
     query Games {

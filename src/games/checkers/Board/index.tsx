@@ -5,13 +5,21 @@ import { BoardModel } from "@/games/checkers/models/board";
 import { Cell } from "@/games/checkers/Cell";
 import { CellModel } from "@/games/checkers/models/cell";
 import { Labels } from "@/games/checkers/models/labels";
+import { BoardPlayers } from "@/gql/graphql";
 
 type BoardProps = {
   board: BoardModel;
+  player: BoardPlayers | undefined;
+  queue: BoardPlayers | undefined;
   onSetBoard: (board: BoardModel) => void;
 };
 
-export const Board = ({ board, onSetBoard }: BoardProps): ReactElement => {
+export const Board = ({
+  board,
+  player,
+  queue,
+  onSetBoard,
+}: BoardProps): ReactElement => {
   const [selected, setSelected] = useState<CellModel | null>(null);
 
   const highlightCells = () => {
@@ -24,11 +32,14 @@ export const Board = ({ board, onSetBoard }: BoardProps): ReactElement => {
       setSelected(null);
       board.shadowsCells();
     } else if (selected && cell.available) {
-      selected?.moveFigure(cell);
+      selected?.moveFigure(cell, board.playerLabel);
       setSelected(null);
       board.shadowsCells();
     } else {
-      if (cell.figure?.label === Labels.Light) {
+      if (
+        cell.figure?.label === board.playerLabel &&
+        player?.player.guid === queue?.player.guid
+      ) {
         // we can only select our figures
         setSelected(cell);
       }
@@ -39,12 +50,6 @@ export const Board = ({ board, onSetBoard }: BoardProps): ReactElement => {
   useMemo(() => {
     highlightCells();
   }, [selected]);
-
-  // useEffect(() => {
-  //   board.highlightCells(selected);
-  //   console.log(board);
-  //   onSetBoard(board);
-  // }, [selected]);
 
   return (
     <div className="flex flex-wrap w-board h-board">
